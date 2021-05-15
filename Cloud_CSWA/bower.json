@@ -1,0 +1,29 @@
+{
+  "name": "cosy-abac-cloud-frontend",
+  "description": "Web application for COSY project",
+  "version": "0.0.1",
+  "license": "Proprietary",
+  "private": true,
+  "dependencies": {
+    "angular": "1.5.11",
+    "angular-bootstrap": "^1.2.0",
+    "angular-ui-router": "^0.2.15",
+    "bootstrap": "~3.3.6",
+    "angular-route": "1.6.2",
+    "angular-translate": "^2.11.1",
+    "angular-translate-loader-static-files": "^2.11.1",
+    "angular-local-storage": "^0.4.0",
+    "angular-sanitize": "1.6.2",
+    "angular-toastr": "^2.1.1",
+    "angular-ui-select": "^0.19.4",
+    "angular-messages": "1.6.2",
+    "ng-lodash": "^0.5.0",
+    "ng-flow": "^2.7.4",
+    "moment": "^2.18.1",
+    "angular-pageslide-directive": "^2.1.4",
+    "angular-md5": "^0.1.10"
+  },
+  "resolutions": {
+    "angular": "1.6.2"
+  }
+}

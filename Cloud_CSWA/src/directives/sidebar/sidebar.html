@@ -1,0 +1,21 @@
+
+<div pageslide ps-open="sidebarVisible" ps-side="left" ps-push="true" ps-size="15%" ps-click-outside="false" class="sidebar pt70">
+			
+	<ul class="list-unstyled">
+		<li>
+			<h4 style="color:white;">Manage ...</h4>
+		</li>
+
+		<li ng-if="isGodSubject">
+			<a ui-sref="deviceTypeState()">
+				<span class="fa fa-cubes"></span>
+				Device Types
+			</a>
+		</li>
+		<li ng-if="isGodSubject">
+			<a ui-sref="fogNodes()">
+				<span class="fa fa-home"></span>
+				Fog Nodes
+			</a>
+	</ul>
+</div>

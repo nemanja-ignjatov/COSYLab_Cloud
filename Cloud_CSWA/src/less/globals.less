@@ -1,0 +1,190 @@
+@import "margins.less";
+@import "colors.less";
+
+@language-menu-width: 55px;
+@language-menu-flag-height: 25px;
+
+@topbar_height : 65px;
+@logo-height: 50px;
+@sidebar_width : 15%;
+
+@footer_height : 40px;
+@status_height : 40px;
+
+.error_message {
+	color : red;
+	font-weight: bold;
+}
+
+#toast-container {
+	z-index: 15;
+}
+
+a {
+	text-decoration: none !important;
+	color: @app-base-font-color;
+	cursor: pointer;
+	
+	&:hover {
+		color: @app-base-font-color;
+	}
+}	
+textarea {
+	resize: none;
+}
+
+body {
+	overflow-x : hidden;
+	background-color: @app-theme-color;
+	position: fixed  !important;
+	width: 100%;
+	height: 100%;
+	overflow-y: scroll; 
+}
+
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+.sweet-overlay {
+	z-index: 1300;
+}
+
+.sweet-alert {
+	z-index: 1400;
+	width: 220px;
+	height: 240px;
+	margin-left: -120px;
+}
+
+.sweet-alert h2{
+	color: @app-sweetalert-red;
+	font-size: 15px;
+	margin: 0;
+	line-height: 20px;
+}
+
+.sweet-alert button {
+	font-size: 10px;
+}
+
+.sweet-alert .sa-icon {
+	margin: 10px auto;
+}
+
+.ui-select-toggle > .caret { 
+	pointer-events: none;
+}
+
+abbr[title] {
+	border-bottom: none;
+}
+
+/* Language menu */
+.language-menu.dropdown {
+	width: @language-menu-width;
+	
+	.btn {
+		padding: 5px;
+		background-color: @app-white;
+		font-size: 0;
+	}
+	
+	input {
+		width: 100% !important;
+	}
+}
+
+.language-menu__flag {
+	height: @language-menu-flag-height;
+}
+
+.dropdown-menu {
+	min-width : 0px !important;	
+}
+
+.ui-select-choices-row-inner {
+	padding: 5px !important;
+}
+
+.system-failure-view {
+	padding: 0;
+	width: 100%;
+	z-index: 10;
+	position: fixed;
+}
+
+.panel-collapse-clickable {
+     cursor: pointer;
+}
+
+
+.view_resized {
+		width: calc(100% - @sidebar_width) !important;
+}
+
+.content-wrapper {
+	position:fixed; 
+	width: 100%;
+	bottom : @footer_height;
+	top: calc(@topbar_height + @status_height);
+	overflow-y: auto; 
+	overflow-x : hidden;
+}
+
+.accordion-toggle:focus {
+	outline: none;
+}
+
+.text-gray {
+	color: @app-sidebar-gray !important;
+}
+
+.red-border {
+    border-style: solid;
+    border-color: red !important;
+}
+
+input[type=number]::-ms-clear {  
+	display: none; 
+	width : 0; 
+	height: 0; 
+}
+
+input[type=text]::-ms-clear {  
+	display: none; 
+	width : 0; 
+	height: 0; 
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.icon-picker-dropdown{
+    max-height: 300px; 
+    overflow-y: auto;
+}
+
+.homepageLinksWarn {
+	position: fixed;
+	z-index: 1000;
+}
+
+input, textarea {
+	font-size: 18px !important;
+}
+th, td, .btn, label, input {
+	font-size: 20px !important;
+}
+
+.btn {
+	font-weight: bold;
+}
+
+td {
+	font-weight: 500;
+}

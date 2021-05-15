@@ -1,0 +1,98 @@
+//
+// Styles for home page elements
+//
+
+@import "colors.less";
+
+@app-entity-input-width: 320px;
+
+.glyphicon-share-alt {
+	color: @app-heading-orange !important;
+}
+.app-panel-header-title {
+	position: absolute;
+	left: 35px;   
+	top:4px;
+	font-weight: bold;
+}
+.app-panel-header-content {
+	margin-right: 70px;
+	margin-top: 4px;
+}
+.app-panel-body {
+	background-color:@app-white;
+}
+
+/* app theme button */
+.btn-app {
+    background: #444;
+    color: #eee;
+}
+ 
+.btn-app:hover, .btn-app:focus, .btn-app:active, .btn-app.active, .open > .dropdown-toggle.btn-app {
+    background: #999;
+}
+ 
+.btn-app:active, .btn-app.active {
+    background: #999;
+    box-shadow: none;
+}
+
+.app-loading-indicator {
+    display: inline-block;
+    vertical-align: middle;
+    background: url("../resources/img/loading.gif");
+    width: 25px;
+    height: 25px;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+
+.btn-primary{
+    background-color: @app-dark-gray;
+    font-weight : bold;
+    border-color : @app-gray;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:visited, .btn-primary:focus {
+    background-color: @app-light-dark-grey !important;
+    font-weight : bold;
+    border-color : @app-dark-gray !important;
+}
+
+.app-text-white {
+	color: #FFF;
+}
+
+.app-bg-pink {
+	background-color: pink;
+}
+
+.app-icon-required {
+	display: inline-block;
+	vertical-align: top;
+	color: #a94442;
+	font-size: 8px !important;
+}
+
+.app-entity-input {
+	width: @app-entity-input-width;
+	text-align: left;
+}
+
+/* ui bootstrap date picker width fix */
+.fixDatePickerWidth .datetime-picker-dropdown{
+	min-width : 303px;
+	width: -webkit-fit-content;
+	height: -webkit-fit-content;
+	width: -moz-fit-content;
+	height: -moz-fit-content;
+}

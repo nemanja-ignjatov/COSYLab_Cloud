@@ -1,0 +1,18 @@
+<div class="topbar" ng-class="{'view_resized' : !!sidebarVisible}">
+	<a ng-click="toggleSidebar()" class="pl20">
+		<i ng-if="!checked"class="fa fa-bars fa-3x pt10" aria-hidden="true"></i>
+		<i ng-if="checked"class="fa fa-times fa-3x pt10" aria-hidden="true"></i>
+	</a>
+	<div class="pull-right pt10 pb10 mr20">
+		<button ng-click="logout()" class="btn btn-primary">
+			<i class="fa fa-sign-out" aria-hidden="true"></i>
+			Logout
+		</button>
+	</div>
+	
+	<div class="pull-right pt10 pb10 mr20">
+
+		<p>Hello, {{fullName}}</p>
+	</div>
+
+</div>

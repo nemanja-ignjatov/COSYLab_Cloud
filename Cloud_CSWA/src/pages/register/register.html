@@ -1,0 +1,71 @@
+<div class="mb40 login-view">
+<section>
+
+
+	<div class="row">
+	
+		<a ui-sref="login()"> 
+			<span class="fa fa-dashboard"></span> 
+			Login
+		</a>
+	
+		<div class="col-sm-4 col-sm-offset-4 panel mt100">
+			<form name="frm" class="form-horizontal" ng-submit="register()" novalidate>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<label class="control-label">Username</label> <input
+							type="text" class="form-control"
+							placeholder="Username" ng-model="username"
+							name="username" autofocus
+							required />
+						<div ng-messages="frm.username.$error" ng-if='frm.username.$dirty'
+							role="alert">
+							<div ng-message="required" class="error_message">Field is required</div>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-12">
+						<label class="control-label">Password</label> <input
+							type="password" class="form-control"
+							placeholder="Password" ng-model="password"
+							name="password"
+							required />
+						<div ng-messages="frm.password.$error" ng-if='frm.password.$dirty'
+							role="alert">
+							<div ng-message="required" class="error_message">Field is required</div>
+
+						</div>
+					</div>
+
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-12">
+						<label class="control-label">Repeat Password</label> <input
+							type="password" class="form-control"
+							placeholder="Repeat Password" ng-model="password2"
+							name="password2"
+							required />
+						<div ng-messages="frm.password2.$error" ng-if='frm.password2.$dirty'
+							role="alert">
+							<div ng-message="required" class="error_message">Field is required</div>
+
+						</div>
+					</div>
+
+				</div>
+				<div class="form-group">
+					<div class="text-center">
+						<button type="submit" class="btn btn-primary" 
+								ng-disabled="frm.$invalid">Register</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>
+</div>
+<div footer-dir></div>

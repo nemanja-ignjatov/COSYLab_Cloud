@@ -1,0 +1,133 @@
+<div class="container-fluid">
+    <script type="text/ng-template" id="addDeviceType.html">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Manage Device Type</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <label class="control-label">Device Type Name</label> <input
+                type="text" class="form-control"
+                placeholder="Device Type Name" ng-model="deviceType.typeName"
+                name="deviceTypeName" autofocus
+                required/>
+            <label class="control-label">Service provider</label> <input
+                type="text" class="form-control"
+                placeholder="Service provider" ng-model="deviceType.serviceProvider"
+                name="serviceProvider" autofocus
+                required/>
+            <label class="control-label">Current Version</label> <input
+                type="text" class="form-control"
+                placeholder="Current Version" ng-model="deviceType.currentVersion.title"
+                name="versionTitle" autofocus
+                required/>
+            <label class="control-label">Version Description</label> <textarea
+                type="text" class="form-control" rows="4"
+                placeholder="Version Description" ng-model="deviceType.currentVersion.description"
+                name="versionDescription" autofocus
+                required></textarea>
+            <label class="control-label">Functions</label>
+            <table class="table table-responsive">
+                <thead class="row">
+                <th class="col-xs-5">Human readable</th>
+                <th class="col-xs-5">Service readable</th>
+                <th class="col-xs-2">Operation</th>
+                </thead>
+                <tbody class="row">
+                <tr ng-repeat="func in deviceType.functionalities">
+                    <td class="col-xs-5">
+                        <input
+                                type="text" class="form-control"
+                                placeholder="Human readable" ng-model="func.humanReadableName"
+                                name="humanReadableName" autofocus
+                                required/>
+                    </td>
+                    <td class="col-xs-5"><input
+                            type="text" class="form-control"
+                            placeholder="Service readable" ng-model="func.serviceName"
+                            name="serviceName"/>
+                    </td>
+                    <td class="col-xs-2">
+                        <button type="button" class="btn btn-primary"
+                                ng-click="removeDevFunctionality(func)">Delete Functionality
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <label class="control-label">Add new function</label>
+            <table class="table">
+                <td class="col-xs-5"><input
+                        type="text" class="form-control"
+                        placeholder="Human readable" ng-model="function.humanReadableName"
+                        name="humanReadableName" autofocus
+                        required/></td>
+                <td class="col-xs-5"><input
+                        type="text" class="form-control"
+                        placeholder="Service readable" ng-model="function.serviceName"
+                        name="serviceName"/></td>
+                <td class="col-xs-2">
+                    <button type="button" class="btn btn-primary" ng-click="addDevFunctionality()">Add Functionality
+                    </button>
+                </td>
+            </table>
+
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()"
+                    ng-disabled="!deviceType.typeName || !deviceType.functionalities">OK
+            </button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+    <h3>Device-Types</h3>
+    <div class="row" ng-if="isGodSubject">
+
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" ng-click="openAddDeviceType()">Add Device Type</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" placeholder="Filter for Device Type Name" ng-model="deviceTypeName"
+                   name="deviceTypeName" autofocus required>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Type Name</th>
+            <th>Service provider</th>
+            <th>Firmware Version</th>
+            <th>Functionality Service Name</th>
+            <th>Functionality Human Readable Name</th>
+            <th ng-hide="!isGodSubject"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="deviceType in deviceTypes | filter : {typeName:deviceTypeName}">
+            <td>{{deviceType.typeName}}</td>
+            <td>{{deviceType.serviceProvider}}</td>
+            <td>{{deviceType.currentVersion.title}}</td>
+            <td>
+                <div ng-repeat="functionality in deviceType.functionalities">{{functionality.serviceName}}
+                </div>
+            </td>
+            <td>
+                <div ng-repeat="functionality in deviceType.functionalities">{{functionality.humanReadableName}}
+                </div>
+            </td>
+            <td ng-hide="!isGodSubject" class="text-center">
+                <button type="button" class="btn btn-primary" ng-click="removeDeviceType(deviceType)">Remove
+                </button>
+                <button type="button" class="btn btn-primary" ng-click="openUpdateDeviceType(deviceType)">Update
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

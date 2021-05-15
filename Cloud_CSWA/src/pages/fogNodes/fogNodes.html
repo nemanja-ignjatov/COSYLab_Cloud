@@ -1,0 +1,72 @@
+<div class="container-fluid">
+
+    <script type="text/ng-template" id="whitelistFogNode.html">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Whitelist Fog Node</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <label class="control-label">Application Secret</label> <input
+                type="text" class="form-control"
+                placeholder="Application secret" ng-model="fn.applicationSecret"
+                name="applicationSecret" autofocus
+                required/>
+            <label class="control-label">Instance Secret</label> <input
+                type="text" class="form-control"
+                placeholder="Instance Secret" ng-model="fn.instanceSecret"
+                name="instanceSecret"/>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()"
+                    ng-disabled="!fn.applicationSecret || !fn.instanceSecret">OK
+            </button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <h3>Fog Nodes</h3>
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div class="text-center">
+                <button type="button" class="btn btn-primary" ng-click="openWhitelistFogNode()">Whitelist Fog Node</button>
+            </div>
+
+<!--            <input-->
+<!--                    type="text" class="form-control"-->
+<!--                    placeholder="Filter for Fog Nodes" ng-model="filterName"-->
+<!--                    name="identity" autofocus-->
+<!--                    required/>-->
+        </div>
+
+        <div class="col-sm-2"></div>
+
+    </div>
+    <div class="ml20 mr20">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Identity</th>
+                <th>Registered At</th>
+                <th>Valid</th>
+                <th>Revoked At</th>
+                <th class="text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="fogNode in fogNodes">
+                <td>{{fogNode.identity}}</td>
+                <td>{{fogNode.registeredAt}}</td>
+                <td>{{fogNode.revokedAt == null ? "YES" : "NO"}}</td>
+                <td>{{fogNode.revokedAt}}</td>
+                <td ng-hide="!isGodSubject" class="text-center">
+                    <button ng-if="fogNode.revokedAt == null" type="button" class="btn btn-primary" ng-click="revokedFogNode(fogNode)">
+                        Revoke Fog Node
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div footer-dir></div>

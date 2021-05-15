@@ -1,0 +1,44 @@
+@import "colors.less";
+@import "globals.less";
+
+.sidebar_logo {
+	display: table-cell;
+	float: none;
+	vertical-align: middle;
+	
+	a img {
+		@media (max-width: 1024px) {
+			max-width: 95%;
+		}
+		
+		max-width: 100%;
+		height: @logo-height;
+	}
+}
+
+.sidebar {
+	width : @sidebar_width !important;
+	background : @app-sidebar-background;
+}
+
+.sidebar li {
+    text-indent: 5px;
+    line-height: 40px;
+}
+
+.sidebar li a {
+    display: block;
+    text-decoration: none;
+    color: @app-sidebar-color;
+}
+
+.sidebar li a:hover {
+    text-decoration: none;
+    color: @app-sidebar-hover-color;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar li a:active,
+.sidebar li a:focus {
+    text-decoration: none;
+}

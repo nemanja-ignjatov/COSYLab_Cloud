@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="cosyApp" >
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>COSY Web Application</title>
+  <meta name="description" content="">
+
+
+  <!-- STYLES -->
+  <!-- build:css lib/css/main.min.css -->
+  <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="bower_components/angular-toastr/dist/angular-toastr.min.css">
+  <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-select/dist/select.min.css">
+  
+  <!-- endbuild -->
+  <!-- SCRIPTS -->
+  <!-- build:js lib/js/main.min.js -->
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-ui-select/dist/select.min.js"></script>  
+  <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-messages/angular-messages.min.js"></script>
+  <script type="text/javascript" src="bower_components/ng-lodash/build/ng-lodash.min.js"></script>
+  <script type="text/javascript" src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>
+  <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-pageslide-directive/dist/angular-pageslide-directive.min.js"></script>  
+   
+  <script type="text/javascript" src="bower_components/angular-md5/angular-md5.min.js"></script>  
+  
+  <!-- endbuild -->
+  <!-- Custom Scripts -->
+  <link rel="stylesheet" type="text/css" href="css/app.css">
+  
+    <!-- TODO find better solution -->
+  <link rel="stylesheet" type="text/css" href="lib/fonts/font-awesome/css/font-awesome.min.css">
+  
+  <script type="text/javascript" src="js/app.min.js"></script>
+
+</head>
+<body>
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+  <div ui-view="topbar"></div>
+  <div ui-view="sidebar"></div>
+  <div ui-view="pageContent" class="content-wrapper" ng-class="{'view_resized' : !!sidebarVisible}"></div>
+  <div ui-view="footer"></div>
+</body>
+</html>
