@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import pki.PublicKeyGenerator;
 import pki.certificate.CSRHandler;
+import pki.certificate.CertificateCreationData;
 import pki.certificate.CertificateHelper;
 import pki.certificate.CertificateKeyConverter;
 import utils.CryptoUtilFunctions;
@@ -48,6 +49,10 @@ public class CryptoCredentialsManager {
     @Value("${cosylab.tnta.keystore.password}")
     private String keystorePassword;
 
+    @Getter
+    @Value("${cosylab.tnta.crl.uri}")
+    private String crlDistributionURL;
+
     private KeyStoreClient keyStoreClient;
 
     private Provider bcProvider;
@@ -56,6 +61,9 @@ public class CryptoCredentialsManager {
 
     @Getter
     private X509Certificate myCert;
+
+    @Getter
+    private String identity;
 
     @PostConstruct
     public void init() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, IOException, UnrecoverableKeyException {
@@ -67,61 +75,67 @@ public class CryptoCredentialsManager {
 
     }
 
-    public X509Certificate signCertificate(PKCS10CertificationRequest csr) throws OperatorCreationException, CertificateException {
-        return new CSRHandler(this.myPrivateKey).generateCertificateFromCSR(csr, true, this.myCert);
+    public X509Certificate signCertificate(PKCS10CertificationRequest csr, String caIdentity) throws OperatorCreationException, CertificateException {
+        return new CSRHandler(this.myPrivateKey).generateCertificateFromCSR(bcProvider, csr, caIdentity,
+                crlDistributionURL, null, String.valueOf(this.myCert.getSerialNumber()));
     }
 
 
     private void executeFTIProcedure() {
-        boolean certLoaded = false;
+        try {
 
-        if (!certLoaded) {
-            try {
-
-                this.myPrivateKey = keyStoreClient.loadMyPrivateKey();
-                this.myCert = keyStoreClient.loadMyCertificate();
-
-                if ((this.myPrivateKey == null) || (this.myCert == null)) {
-
-                    KeyPair keyPair = PublicKeyGenerator.generatePublicKeyPair();
-
-                    String identity = IdentityGenerator.generateCloudServiceIdentifier(CloudServiceType.TNTA);
-                    String subjectCN = CryptoUtilFunctions.generateCertCommonName(identity);
-                    Certificate tntacert = CertificateHelper.generateSelfSignedCertificate(bcProvider, keyPair, subjectCN);
-
-                    this.myCert = CertificateKeyConverter.convertCertToX509(tntacert);
-                    this.myPrivateKey = keyPair.getPrivate();
-
-                    keyStoreClient.storeMyPrivateKeyAndCertificate(keyPair.getPrivate(), this.myCert);
-                    logger.info("FTI was successful, keys generated");
-
-                    configurationAttributeRepository.save(new ConfigurationAttribute(ID_CONFIG_ATTR, identity));
-
-                } else {
-                    logger.info("FTI was successful, keys already exist");
-                }
-            } catch (NoSuchProviderException e) {
-                e.printStackTrace();
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (InvalidAlgorithmParameterException e) {
-                e.printStackTrace();
-            } catch (CertificateException e) {
-                e.printStackTrace();
-            } catch (UnrecoverableKeyException e) {
-                e.printStackTrace();
-            } catch (KeyStoreException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            this.myPrivateKey = keyStoreClient.loadMyPrivateKey();
+            this.myCert = keyStoreClient.loadMyCertificate();
+            ConfigurationAttribute idAttr = configurationAttributeRepository.findByName(ID_CONFIG_ATTR);
+            if (idAttr != null) {
+                this.identity = idAttr.getValue();
             }
+
+            if ((this.myPrivateKey == null) || (this.myCert == null) || (this.identity == null)) {
+
+                KeyPair keyPair = PublicKeyGenerator.generatePublicKeyPair();
+
+                this.identity = IdentityGenerator.generateCloudServiceIdentifier(CloudServiceType.TNTA);
+                CertificateCreationData certData = new CertificateCreationData(this.identity, this.identity,keyPair.getPublic());
+
+                Certificate tntacert = CertificateHelper.generateCertificate(bcProvider, keyPair.getPrivate(), certData);
+
+                this.myCert = CertificateKeyConverter.convertCertToX509(tntacert);
+                this.myPrivateKey = keyPair.getPrivate();
+
+                keyStoreClient.storeMyPrivateKeyAndCertificate(keyPair.getPrivate(), this.myCert);
+                logger.info("FTI was successful, keys generated");
+
+                if (idAttr == null) {
+                    configurationAttributeRepository.save(new ConfigurationAttribute(ID_CONFIG_ATTR, this.identity));
+                } else {
+                    idAttr.setValue(this.identity);
+                    configurationAttributeRepository.save(idAttr);
+                }
+            } else {
+                logger.info("FTI was successful, keys already exist");
+            }
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (UnrecoverableKeyException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     public String decryptECText(String request) {
         try {
-            return ECUtils.decryptText(request,this.myPrivateKey);
-        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException|
+            return ECUtils.decryptText(request, this.myPrivateKey);
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException |
                 BadPaddingException | IllegalBlockSizeException e) {
             e.printStackTrace();
             return null;

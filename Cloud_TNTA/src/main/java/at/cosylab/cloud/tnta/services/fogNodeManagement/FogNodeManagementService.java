@@ -91,7 +91,7 @@ public class FogNodeManagementService {
             String encryptedCSRToken = AESUtil.encryptString(csrToken, aesKey, new IvParameterSpec(iv));
 
             //Store data to db
-            FogNodeEntity fogNodeEntity = new FogNodeEntity(request.getIdentity(), aesKeyAlias, csrToken, salt);
+            FogNodeEntity fogNodeEntity = new FogNodeEntity(request.getIdentity(), aesKeyAlias, csrToken);
             fogRepository.save(fogNodeEntity);
 
             // return CSR token

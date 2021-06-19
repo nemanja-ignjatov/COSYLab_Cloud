@@ -20,19 +20,15 @@ public class FogNodeEntity {
     private String identity;
     private String certificate;
     private LocalDateTime certificateRevokedAt;
-    @Indexed(unique = true)
-    private String aesKeyAlias;
+
     private String csrToken;
-    private String salt;
 
     private LocalDateTime registeredAt;
 
-    public FogNodeEntity(String identity, String aesKeyAlias, String csrToken, String salt) {
+    public FogNodeEntity(String identity, String aesKeyAlias, String csrToken) {
         this.id = id;
         this.identity = identity;
-        this.aesKeyAlias = aesKeyAlias;
         this.csrToken = csrToken;
-        this.salt = salt;
         this.registeredAt = LocalDateTime.now();
     }
 }

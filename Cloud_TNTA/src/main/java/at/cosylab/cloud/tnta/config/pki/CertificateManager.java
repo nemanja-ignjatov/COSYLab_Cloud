@@ -29,7 +29,7 @@ public class CertificateManager {
 
         PKCS10CertificationRequest csr = CertificateKeyConverter.convertPemToPKCS10CertificationRequest(csrContent);
         verifyCSR(CryptoUtilFunctions.generateCertCommonName(identity), csr);
-        return CertificateKeyConverter.convertX509ToPEM(cryptoManager.signCertificate(csr));
+        return CertificateKeyConverter.convertX509ToPEM(cryptoManager.signCertificate(csr, cryptoManager.getIdentity()));
     }
 
 
