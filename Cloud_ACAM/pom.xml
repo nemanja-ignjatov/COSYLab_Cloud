@@ -10,14 +10,14 @@
 	</parent>
 	<groupId>at.cosylab.cloud</groupId>
 	<artifactId>cloud_acam</artifactId>
-	<version>1.1</version>
+	<version>1.2</version>
 	<name>cloud_acam</name>
 	<description>Access Control Agents Management component</description>
 
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
-		<cosylab.cloud.utils.version>1.1</cosylab.cloud.utils.version>
+		<cosylab.cloud.utils.version>1.2</cosylab.cloud.utils.version>
 	</properties>
 
 	<dependencies>
