@@ -1,0 +1,82 @@
+version: '3.5'
+
+services:
+    reverse-proxy:
+        image: nginx
+        container_name: reverse-proxy
+        hostname: reverse-proxy
+        volumes:
+            - ./nginx/config:/etc/nginx
+            - ./nginx/ssl:/etc/ssl/private
+        ports:
+            - 80:80
+        links:
+            - cosylab-cswa
+            - cosylab-acam
+            - cosylab-tnta
+    cloud-mongodb:
+        image: mongo:4.4.10
+        container_name: cloud-mongod
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: ${COSYLAB_MONGO_USER}
+            MONGO_INITDB_ROOT_PASSWORD: ${COSYLAB_MONGO_PASS}
+    cosylab-cloud-discovery-server:
+        image: ignjatov90/cosylab-cloud-discovery-server
+        container_name: cosylab-cloud-discovery-server
+        hostname: cosylab-cloud-discovery-server
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:8761"]
+            interval: 5s
+            timeout: 5s
+            retries: 10
+    cosylab-cloud-config-server:
+        image: ignjatov90/cosylab-cloud-config-server
+        container_name: cosylab-cloud-config-server
+        hostname: cosylab-cloud-config-server
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:8888/acam/default"]
+            interval: 5s
+            timeout: 5s
+            retries: 10
+        links:
+            - cosylab-cloud-discovery-server
+        depends_on:
+            cosylab-cloud-discovery-server:
+                condition: service_healthy
+    cosylab-cswa:
+        image: ignjatov90/cosylab-cloud-cswa
+        container_name: cosylab-cswa
+        hostname: cosylab-cswa
+    cosylab-acam:
+        image: ignjatov90/cosylab-cloud-acam
+        container_name: cosylab-acam
+        hostname: cosylab-acam
+        environment:
+            COSYLAB_MONGO_USER: ${COSYLAB_MONGO_USER}
+            COSYLAB_MONGO_PASS: ${COSYLAB_MONGO_PASS}
+            COSYLAB_ACAM_USER: ${COSYLAB_ACAM_USER}
+            COSYLAB_ACAM_PASS: ${COSYLAB_ACAM_PASS}
+        links:
+            - cloud-mongodb
+            - cosylab-cloud-discovery-server
+            - cosylab-cloud-config-server
+            - cosylab-tnta
+        depends_on:
+            cosylab-cloud-config-server:
+                condition: service_healthy
+    cosylab-tnta:
+        image: ignjatov90/cosylab-cloud-tnta
+        container_name: cosylab-tnta
+        hostname: cosylab-tnta
+        environment:
+            COSYLAB_MONGO_USER: ${COSYLAB_MONGO_USER}
+            COSYLAB_MONGO_PASS: ${COSYLAB_MONGO_PASS}
+            COSYLAB_TNTA_KEYSTORE_PASS: ${COSYLAB_KEYSTORE_PASS}
+        links:
+            - cloud-mongodb
+            - cosylab-cloud-discovery-server
+            - cosylab-cloud-config-server
+        depends_on:
+            cosylab-cloud-config-server:
+                condition: service_healthy
